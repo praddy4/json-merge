@@ -1,7 +1,6 @@
-var mergeModeList = {
-    "arrayMerge": 0,
-    "objectMerge": 1
-}
+var obj1 = require('./obj1.json');
+var obj2 = require('./obj2.json');
+
 
 function isJson(json) {
     if (json && json.constructor === {}.constructor) {
@@ -12,144 +11,112 @@ function isJson(json) {
     }
 }
 
-var obj1 = {
-    "name": "package-json",
-    "version": "4.0.1",
-    "description": "Get metadata of a package from the npm registry",
-    "license": "MIT",
-    "repository": "sindresorhus/package-json",
-    "author": {
-        "name": "Sindre Sorhus",
-        "email": "sindresorhus@gmail.com",
-        "url": "sindresorhus.com"
-    },
-    "engines": {
-        "node": ">=4"
-    },
-    "scripts": {
-        "test": "xo && ava"
-    },
-    "files": [
-        "index.js"
-    ],
-    "keywords": [
-        "npm",
-        "registry",
-        "package",
-        "pkg",
-        "package.json",
-        "json",
-        "module",
-        "scope",
-        "scoped"
-    ],
-    "dependencies": {
-        "got": "^6.7.1",
-        "registry-auth-token": "^3.0.1",
-        "registry-url": "^3.0.3",
-        "semver": "^5.1.0"
-    },
-    "devDependencies": {
-        "ava": "*",
-        "mock-private-registry": "^1.1.0",
-        "xo": "*"
+
+function jsonMerge(obj1, obj2, options) {
+
+    var mergeMode = {
+        "stringArrayMerge": false,
+        "arrayNestedMerge": false,
+        "arrayMerge": false,
+        "objectArrayMerge": false,
+        "objectMerge": false
     }
-}
 
-var obj2 = {
-    "name": "package-json",
-    "version": "4.0.1",
-    "description": "Get metadata of a package from the npm registry",
-    "license": "MIT",
-    "repository": "sindresorhus/package-json",
-    "author": {
-        "name": "Sindre Sorhus",
-        "email": "sindresorhus@gmail.com",
-        "url": "sindresorhus.com"
-    },
-    "engines": {
-        "node": ">=4"
-    },
-    "scripts": {
-        "test": "xo && ava"
-    },
-    "files": [
-        "index.js"
-    ],
-    "keywords": [
-        "npm",
-        "registry",
-        "package",
-        "pkg",
-        "package.json",
-        "json",
-        "module",
-        "scope",
-        "scoped"
-    ],
-    "amma": "love"
-}
-
-
-function jsonMerge(obj1, obj2, mergeMode) {
-    
-    var mergeMode;
-    if (mergeMode) {
-        mergeMode = mergeModeList[mergeMode];
-        console.log("mergeMode: ", mergeMode);
+    if (options) {
+        for (mode in options) {
+            if (mergeMode.hasOwnProperty(mode)) {
+                mergeMode[mode] = options[mode];
+                // console.log("MergeMode: ");
+                // console.log(mergeMode);
+            } else {
+                console.log("ERROR: Invalid option '" + mode + "'");
+                return
+            }
+        }
     }
 
     if (isJson(obj1) && isJson(obj2)) {
-        for (key in obj2) {
-            // console.log("key: ", obj2[key]);
+        var resultJson = JSON.parse(JSON.stringify(obj1));
 
-            switch (mergeMode) {
-                case 0:
-                    console.log("@@@@@@@@@@@@@@@@");
-                    arrayMergeFn(key);
-                    break;
-                case 1:
-                    console.log("################");
-                    break;
-                default:
-                    obj1[key] = obj2[key];
-                    break;
-            }
+        for (key in obj2) {
+            checkKeyTypeFn(key);
         }
-        return obj1;
+
+        return resultJson;
+
+    } else {
+        console.log("ERROR: Invalid JSON arguement passed");
+    }
+
+    function checkKeyTypeFn(key) {
+        if (typeof obj2[key] === "string") {
+            stringMergeFn(key);
+        } else if (obj2[key].constructor === Array) {
+            arrayMergeFn(key);
+        } else if (obj2[key].constructor === {}.constructor) {
+            jsonMergeFn(key);
+        } else {
+            resultJson[key] = obj2[key];
+        }
+    }
+
+    function stringMergeFn(key) {
+        if (resultJson[key] && typeof resultJson[key] === "string") {
+            if (mergeMode.stringArrayMerge) {
+                var temp = [resultJson[key], obj2[key]];
+                resultJson[key] = temp;
+            } else {
+                resultJson[key] = obj2[key];
+            }
+        } else {
+            resultJson[key] = obj2[key];
+        }
     }
 
     function arrayMergeFn(key) {
-        if (obj1.hasOwnProperty(key)) {
-            if(typeof obj1[key] === 'string' || typeof obj1[key] === 'string') {
-                obj2[key]
+        if (resultJson[key] && resultJson[key].constructor === Array) {
+
+            if (mergeMode.arrayNestedMerge) {
+                console.log("arrayNestedMerge")
+                var temp = [resultJson[key], obj2[key]];
+                resultJson[key] = temp;
+            } else if (mergeMode.arrayMerge) {
+                console.log("arrayMerge")
+                resultJson[key] = resultJson[key].concat(obj2[key]);
+            } else {
+                resultJson[key] = obj2[key];
             }
-            var tempArrgy = [obj1[key], obj2[key]];
-            obj1[key] = tempArr;
-
-            // if (obj1[key].constructor === Array) {
-            //     console.log(key);
-            // }
-
         } else {
-            obj1[key] = obj2[key];
+            resultJson[key] = obj2[key];
         }
     }
 
     function jsonMergeFn(key) {
-        if (obj1.hasOwnProperty(key)) {
-            // var tempObj = {obj1[key], obj2[key]];
-            // obj1[key] = tempArr;
+        if (resultJson[key] && resultJson[key].constructor === {}.constructor) {
 
-            if (obj1[key].constructor === {}.constructor) {
-                console.log(key);
+            if (mergeMode.objectArrayMerge) {
+                console.log("objectArrayMerge")
+                var temp = [resultJson[key], obj2[key]];
+                resultJson[key] = temp;
+            } else if (mergeMode.objectMerge) {
+                console.log("objectMerge");
+                for(prop in obj2[key]) {
+                    resultJson[key][prop] = obj2[key][prop];
+                }
+            } else {
+                resultJson[key] = obj2[key];
             }
-
         } else {
-            obj1[key] = obj2[key];
+            resultJson[key] = obj2[key];
         }
     }
 
 }
 
-console.log(jsonMerge(obj1, obj2, 'arrayMerge'));
+var res = jsonMerge(obj1, obj2, {
+    "stringArrayMerge": false,
+    "arrayMerge": true,
+    "objectArrayMerge": true
+});
+
+console.log(res);
