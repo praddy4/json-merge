@@ -1,0 +1,26 @@
+{
+  "name": "node-json-merge",
+  "version": "1.0.0",
+  "description": "This package provides api to merge 2 json objects, with customization.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/praddy4/node-json-merge.git"
+  },
+  "keywords": [
+    "json",
+    "merge",
+    "nodejs",
+    "json-merge",
+    "merge-json"
+  ],
+  "author": "Pradeep Lakshmi Narasimha",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/praddy4/node-json-merge/issues"
+  },
+  "homepage": "https://github.com/praddy4/node-json-merge#readme"
+}
