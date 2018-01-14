@@ -1,2 +1,2 @@
 # node-json-merge
-This project provides apis for merging json objects in Nodejs.
+This package provides api to merge 2 json objects, with customization in nodejs.
