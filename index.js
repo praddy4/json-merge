@@ -1,5 +1,3 @@
-var obj1 = require('./obj1.json');
-var obj2 = require('./obj2.json');
 
 
 function isJson(json) {
@@ -12,7 +10,7 @@ function isJson(json) {
 }
 
 
-function jsonMerge(obj1, obj2, options) {
+module.exports.jsonMerge = function(obj1, obj2, options) {
 
     var mergeMode = {
         "stringArrayMerge": false,
@@ -26,8 +24,6 @@ function jsonMerge(obj1, obj2, options) {
         for (mode in options) {
             if (mergeMode.hasOwnProperty(mode)) {
                 mergeMode[mode] = options[mode];
-                // console.log("MergeMode: ");
-                // console.log(mergeMode);
             } else {
                 console.log("ERROR: Invalid option '" + mode + "'");
                 return
@@ -77,11 +73,9 @@ function jsonMerge(obj1, obj2, options) {
         if (resultJson[key] && resultJson[key].constructor === Array) {
 
             if (mergeMode.arrayNestedMerge) {
-                console.log("arrayNestedMerge")
                 var temp = [resultJson[key], obj2[key]];
                 resultJson[key] = temp;
             } else if (mergeMode.arrayMerge) {
-                console.log("arrayMerge")
                 resultJson[key] = resultJson[key].concat(obj2[key]);
             } else {
                 resultJson[key] = obj2[key];
@@ -95,11 +89,9 @@ function jsonMerge(obj1, obj2, options) {
         if (resultJson[key] && resultJson[key].constructor === {}.constructor) {
 
             if (mergeMode.objectArrayMerge) {
-                console.log("objectArrayMerge")
                 var temp = [resultJson[key], obj2[key]];
                 resultJson[key] = temp;
             } else if (mergeMode.objectMerge) {
-                console.log("objectMerge");
                 for(prop in obj2[key]) {
                     resultJson[key][prop] = obj2[key][prop];
                 }
@@ -112,11 +104,3 @@ function jsonMerge(obj1, obj2, options) {
     }
 
 }
-
-var res = jsonMerge(obj1, obj2, {
-    "stringArrayMerge": false,
-    "arrayMerge": true,
-    "objectArrayMerge": true
-});
-
-console.log(res);
