@@ -34,7 +34,7 @@ Thus returning a new JSON object as shown in the example above. This is the defa
 The API provided as part of this package can be configured to do customized merge, by passing a 'options' object as a third parameter.
 
 |options| obj1 | obj2 | result | Description |
-| ------- | --- | --- | --- | --- |
+| --------------- | --------------- | --------------- | --------------- | --------------- |
 | {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | If same key is present in obj1 and obj2, and if its value is string bothe values would be pushed into an array |
 | {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | |
 | {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | |
