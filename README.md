@@ -41,4 +41,10 @@ The API provided as part of this package can be configured to do customized merg
 | {objectArrayMerge: true} | {a:{'silicon':'valley'}} | {a:{'mountain':'view'}} | {a:[{'silicon':'valley'},{'mountain':'view'}]} |
 | {objectMerge:true} | {a:{'silicon':'valley'} } | {a:{'mountain':'view'} } | {a:{'silicon':'valley','mountain':'view'}}|
 
+## Note:
+* In case of passing options as {arrayMerge: true, arrayNestedMerge: true}, then 'arrayNestedMerge' is given priority
+* In case of passing options as {objectArrayMerge: true, objectMerge: true}, then 'objectArrayMerge' is given priority
+* In case of passing options as {}, merge will happen with default behaviour 
+* If obj1 and obj2 has differnet type of values for a key, then in the result object the key will have value of obj2
+* For a particular type of customized merge to happen, in the options object the valid flag has to be set to true and passed to the API as third paramter
 
