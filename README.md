@@ -2,7 +2,7 @@
 This package provides api to merge 2 json objects, with customized merge in nodejs.
 
 
-## installation and usage
+## Installation and usage
 
 ``` bash
 npm install node-json-merge
@@ -12,7 +12,7 @@ npm install node-json-merge
 var merge = require("node-json-merge") ;
 ```
 
-## merging of JSON objects
+## Merging of JSON objects
 
 ``` javascript
 var obj1 = {a:true, b:false} ;
