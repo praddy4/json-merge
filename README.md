@@ -1,5 +1,5 @@
 # node-json-merge
-This package provides api to merge 2 json objects, with customized merge in nodejs.
+This package provides API to merge 2 JSON objects, with customized merge in nodejs.
 
 
 ## Installation and usage
@@ -22,10 +22,15 @@ var result = merge.jsonMerge(obj1, obj2) ;
 console.log(result) ;
 // Object {a: true, b: true, c: 12345}
 ```
-The above usage of api will merge obj2 with obj1 by overwriting those keys present in both objects with value of the key present in obj2, returning a new json object.
+The above usage of API will merge obj2 with obj1 by
+* Overwriting the key present in both objects, with the value of the key present in obj2
+* Adding new key:value pair if the key exists only in one of the object   
+
+Thus returning a new JSON object as shown in the example above. This is the default behaviour of the API
+
 
 ## Customized merge
 
-The api provided as part of this package can be configured to do customized merge, by passing a 'options' object as a third parameter.
+The API provided as part of this package can be configured to do customized merge, by passing a 'options' object as a third parameter.
 
 
