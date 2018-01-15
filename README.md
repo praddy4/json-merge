@@ -31,7 +31,7 @@ Thus returning a new JSON object as shown in the example above. This is the defa
 
 ## Customized merge
 
-The API provided as part of this package can be configured to do customized merge, by passing a 'options' object as a third parameter.
+The API provided as part of this package can be configured to do customized merge, by passing 'options' object as a third parameter to the API.
 
 |options| obj1 | obj2 | result |
 | --------------- | --------------- | --------------- | --------------- |
@@ -44,7 +44,7 @@ The API provided as part of this package can be configured to do customized merg
 ## Note:
 * In case of passing options as {arrayMerge: true, arrayNestedMerge: true}, then 'arrayNestedMerge' is given priority
 * In case of passing options as {objectArrayMerge: true, objectMerge: true}, then 'objectArrayMerge' is given priority
-* In case of passing options as {}, merge will happen with default behaviour 
+* In case of passing options as { }, merge will happen with default behaviour 
 * If obj1 and obj2 has differnet type of values for a key, then in the result object the key will have value of obj2
 * For a particular type of customized merge to happen, in the options object the valid flag has to be set to true and passed to the API as third paramter
 
