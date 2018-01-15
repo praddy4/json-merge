@@ -36,11 +36,9 @@ The API provided as part of this package can be configured to do customized merg
 |options| obj1 | obj2 | result | Description |
 | --------------- | --------------- | --------------- | --------------- | --------------- |
 | {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | If same key is present in obj1 and obj2, and if its value is string bothe values would be pushed into an array |
-| {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | |
-| {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | |
-| {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | |
-| {"stringArrayMerge": true} | { a: 'silicon' } | {a: 'valley'} | { a: [ 'silicon', 'valley' ] } | |
-
-| git diff | Show file differences that haven't been staged |
+| {"arrayMerge": true} | { a: ['silicon'] } | {a: ['valley'] } | { a: [ 'silicon', 'valley' ] } | |
+| {"arrayNestedMerge": true} | { a: ['silicon'] } | {a: ['valley'] } | { a: [ ['silicon'], ['valley'] ] } | |
+| {"objectArrayMerge": true} | { a: {'silicon' : 'valley'} } | {a: {'mountain': 'view'} } | { a: [ {'silicon' : 'valley'}, {'mountain': 'view'} ] } | |
+| {"objectMerge": true} | { a: {'silicon' : 'valley'} } | {a: {'mountain': 'view'} } | { a: {'silicon' : 'valley', 'mountain': 'view'} } | |
 
 
